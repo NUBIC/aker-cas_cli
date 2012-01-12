@@ -57,8 +57,8 @@ configuring Aker, Aker authorities, etc.
 
 [aker-doc]: http://rubydoc.info/gems/aker/file/README.md
 
-Why not an Aker authority?
---------------------------
+Why isn't Aker CAS CLI an Aker authority?
+-----------------------------------------
 
 An Aker authority also has the form of a module/class providing a
 method which takes a username and password, validates the pair, and
@@ -69,3 +69,14 @@ should obviate the need to ever scrape a CAS server's interactive
 login page as part of the regular operation of an Aker-protected
 application. This library is for interacting with non-Aker-protected
 services which have no alternatives to CAS PTs.
+
+## Credits
+
+Aker CAS CLI was developed at and for the [Northwestern University
+Biomedical Informatics Center][NUBIC].
+
+[NUBIC]: http://www.nucats.northwestern.edu/centers/nubic/index.html
+
+### Copyright
+
+Copyright (c) 2012 Rhett Sutphin. See LICENSE for details.
