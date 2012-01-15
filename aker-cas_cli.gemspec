@@ -16,7 +16,11 @@ Gem::Specification.new do |gem|
   gem.version       = Aker::CasCli::VERSION
 
   gem.add_dependency 'aker', '~> 3.0'
+  gem.add_dependency 'mechanize', '~> 2.1.0'
 
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec', '~> 2.6'
+  gem.add_development_dependency 'rubycas-server', '~> 1.0'
+  gem.add_development_dependency 'childprocess', '~> 0.2.9'
+  gem.add_development_dependency 'sqlite3'
 end

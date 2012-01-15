@@ -1,0 +1,23 @@
+server: webrick
+port: <%= port %>
+ssl_cert: <%= ssl_cert %>
+ssl_key: <%= ssl_key %>
+
+database:
+  adapter: sqlite3
+  database: <%= cas_db_file %>
+
+authenticator:
+  class: CASServer::Authenticators::SQL
+  database:
+    adapter: sqlite3
+    database: <%= users_db_file %>
+  user_table: users
+  username_column: username
+  password_column: password
+
+default_locale: en
+
+log:
+  file: <%= cas_log_file %>
+  level: INFO
