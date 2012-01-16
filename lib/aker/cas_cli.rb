@@ -23,11 +23,16 @@ module Aker
     #   configuration to use. This configuration should have the :cas
     #   authority (or an appropriate substitute) configured into its
     #   authority chain.
-    def initialize(configuration)
+    # @param [Hash] mechanize_options attribute values for the
+    #   mechanize agent used to do the scraping. Use this, e.g., to
+    #   specify the SSL CA to use.
+    def initialize(configuration, mechanize_options={})
       @configuration = configuration
       @agent = Mechanize.new do |a|
+        mechanize_options.each do |attr, value|
+          a.send("#{attr}=", value)
+        end
         a.redirect_ok = false
-        a.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
     end
 
