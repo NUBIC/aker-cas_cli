@@ -2,9 +2,7 @@ require 'net/http'
 require 'fileutils'
 require 'childprocess'
 
-# This is necessary until we figure out how to dynamically trust a
-# particular certificate.
-OpenSSL::SSL::SSLContext::DEFAULT_PARAMS[:verify_mode] = OpenSSL::SSL::VERIFY_NONE
+require 'disable_ssl_verify'
 
 module Aker
   module Spec
@@ -15,7 +13,7 @@ module Aker
 
       def initialize(options={})
         @port = options.delete(:port) or raise 'Please specify a port'
-        @host = options.delete(:host) || '127.0.0.1'
+        @host = options.delete(:host) || 'localhost'
         @timeout = options.delete(:timeout) || 30
         @tmpdir = options.delete(:tmpdir) or raise 'Please specify tmpdir'
         @ssl = options.delete(:ssl) || false
@@ -65,6 +63,14 @@ module Aker
       end
 
       protected
+
+      def ssl_cert
+        Pathname.new File.expand_path('../integrated-test-ssl.crt', __FILE__)
+      end
+
+      def ssl_key
+        Pathname.new File.expand_path('../integrated-test-ssl.key', __FILE__)
+      end
 
       def http_available?(url)
         url = URI.parse(url)

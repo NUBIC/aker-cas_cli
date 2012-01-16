@@ -3,19 +3,26 @@ require 'aker'
 
 module Aker
   describe CasCli, :integrated do
-    let(:cas_cli) { CasCli.new(aker_config) }
+    let(:cas_cli) { CasCli.new(aker_config, mechanize_options) }
 
     let(:username) { 'mr261' }
     let(:correct_password) { 's3r3nity' }
 
     let(:aker_config) {
-      server = cas_server
+      ex = self
+      callback_server = spawned_rack_servers['proxy_callback']
       logfile = File.join(tmpdir, 'aker.log')
       Aker::Configuration.new do
         authority :cas
-        cas_parameters :cas_base_url => server.base_url
+        cas_parameters :base_url => ex.cas_server.base_url,
+                       :proxy_retrieval_url => File.join(callback_server.base_url, 'retrieve_pgt'),
+                       :proxy_callback_url => File.join(callback_server.base_url, 'receive_pgt')
         logger Logger.new(File.open(logfile, 'w'))
       end
+    }
+
+    let(:mechanize_options) {
+      { :verify_mode => OpenSSL::SSL::VERIFY_NONE }
     }
 
     before do
@@ -41,14 +48,12 @@ module Aker
       end
 
       it 'can request PTs' do
-        pending
         lambda { user.cas_proxy_ticket(service_url) }.should_not raise_error
       end
 
       it 'receives valid PTs' do
-        pending
         pt = user.cas_proxy_ticket(service_url)
-        proxied = Aker.authority.valid_credentials?(:cas_proxy, pt, service_url)
+        proxied = aker_config.composite_authority.valid_credentials?(:cas_proxy, pt, service_url)
         proxied.username.should == user.username
       end
     end

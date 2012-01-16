@@ -51,8 +51,10 @@ module Aker
 
       def server_command
         [
-          'bundle',
-          'exec',
+          'ruby',
+          '-r',
+          File.expand_path('../../disable_ssl_verify.rb', __FILE__),
+          '-S',
           'rubycas-server',
           '-c',
           config_file
@@ -64,14 +66,6 @@ module Aker
       end
 
       private
-
-      def ssl_cert
-        Pathname.new File.expand_path('../integrated-test-ssl.crt', __FILE__)
-      end
-
-      def ssl_key
-        Pathname.new File.expand_path('../integrated-test-ssl.key', __FILE__)
-      end
 
       def users_db_file
         Pathname.new File.join(tmpdir, 'rubycas_users.sqlite')

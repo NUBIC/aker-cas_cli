@@ -1,6 +1,8 @@
 require 'pathname'
 
 require 'servers/rubycas_server'
+require 'servers/spawned_rack_server'
+require 'patch_castanet_7'
 
 require 'aker/cas_cli'
 
@@ -28,4 +30,11 @@ RSpec.configure do |config|
   end
 
   Aker::Spec::RubycasServer.run_with_rspec_tag(:integrated, config)
+  Aker::Spec::SpawnedRackServer.run_with_rspec_tag(:integrated, config,
+    :name => 'proxy_callback',
+    :rackup_file => File.expand_path('../servers/proxy_callback.ru.erb', __FILE__),
+    :ssl => true,
+    :port => '6012',
+    :tmpdir => tmpdir
+  );
 end
