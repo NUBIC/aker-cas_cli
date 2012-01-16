@@ -10,8 +10,7 @@ Aker CAS CLI takes a username and password, screen-scrapes its way
 through an interactive CAS login, and gives you an `Aker::User` just
 as if a user of your application had done an interactive CAS login.
 
-Sample use
-----------
+## Sample use
 
     # E.g., in a rake task in an Aker-protected Rails app
     task :some_job => :environment do |t|
@@ -25,15 +24,13 @@ Sample use
       end
     end
 
-Assumptions
------------
+## Assumptions
 
 * Your CAS server only requires a username and password. It doesn't
   use X509 certificates, two-factor authentication, or any additional
   custom fields on the login form.
 
-Use
----
+## Use
 
 Aker CAS CLI relies on the Aker CAS authority. The CAS authority must
 be configured in the Aker::Configuration you pass to Aker CAS CLI. If
@@ -57,8 +54,7 @@ configuring Aker, Aker authorities, etc.
 
 [aker-doc]: http://rubydoc.info/gems/aker/file/README.md
 
-Why isn't Aker CAS CLI an Aker authority?
------------------------------------------
+## Why isn't Aker CAS CLI an Aker authority?
 
 An Aker authority also has the form of a module/class providing a
 method which takes a username and password, validates the pair, and
