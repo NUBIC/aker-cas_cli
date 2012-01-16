@@ -39,7 +39,7 @@ module Aker
     ##
     # Attempts to verify the provided credentials. Verification is
     # attempted through screen-scraping the login form provided by the
-    # CAS server configured in {#aker_configuration}.
+    # CAS server configured in {#configuration}.
     #
     # @return [Aker::User,nil] the authenticated user, or nil if the
     #   credentials are invalid.
