@@ -2,7 +2,6 @@ require 'pathname'
 
 require 'servers/rubycas_server'
 require 'servers/spawned_rack_server'
-require 'patch_castanet_7'
 
 require 'aker/cas_cli'
 
